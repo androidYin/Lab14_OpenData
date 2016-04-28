@@ -5,7 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.android.lab14_opendata.observer.Observer;
+import com.example.android.lab14_opendata.util.TaipeiOpenDataUtil;
+
+public class MainActivity extends AppCompatActivity implements Observer {
 
     private RecyclerView m_rv_attractions;
     private AttractionsRecyclerViewAdapter mAdapter;
@@ -15,6 +18,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        init();
+        TaipeiOpenDataUtil.loadTaipeiAttractions(this);
+    }
+
+    private void init() {
         m_rv_attractions = (RecyclerView)findViewById(R.id.rv_attractions);
         m_rv_attractions.setHasFixedSize(true); // 告知畫面中的每個 Item 結構都相同 (提高執行效率)
 
@@ -28,4 +36,13 @@ public class MainActivity extends AppCompatActivity {
         m_rv_attractions.setAdapter(mAdapter);
     }
 
+    @Override
+    public void OnCompleted() {
+        mAdapter.notifyDataSetChanged(); // adapter 通知 RecyclerView 資料有改變，請更新畫面
+    }
+
+    @Override
+    public void OnError(String message) {
+
+    }
 }
