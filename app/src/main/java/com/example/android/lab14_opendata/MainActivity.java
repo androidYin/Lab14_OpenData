@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.example.android.lab14_opendata.observer.Observer;
 import com.example.android.lab14_opendata.util.TaipeiOpenDataUtil;
 
 public class MainActivity extends AppCompatActivity implements Observer {
 
+    private static final String TAG = "MainActivity";
     private RecyclerView m_rv_attractions;
     private AttractionsRecyclerViewAdapter mAdapter;
 
@@ -38,11 +40,13 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     @Override
     public void OnCompleted() {
+        Log.d(TAG, "OnCompleted");
         mAdapter.notifyDataSetChanged(); // adapter 通知 RecyclerView 資料有改變，請更新畫面
     }
 
     @Override
     public void OnError(String message) {
-
+        Log.d(TAG, "OnError");
+        Log.d(TAG, message);
     }
 }
