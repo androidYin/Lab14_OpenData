@@ -1,11 +1,15 @@
 package com.example.android.lab14_opendata;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
+import com.example.android.lab14_opendata.myapp.MyApp;
 import com.example.android.lab14_opendata.observer.Observer;
 import com.example.android.lab14_opendata.util.TaipeiOpenDataUtil;
 
@@ -48,5 +52,28 @@ public class MainActivity extends AppCompatActivity implements Observer {
     public void OnError(String message) {
         Log.d(TAG, "OnError");
         Log.d(TAG, message);
+    }
+
+    public void clickMap(View view) {
+
+        int position = (int)view.getTag();
+
+        // https://developers.google.com/maps/documentation/android-api/intents
+        // Create a Uri from an intent string. Use the result to create an Intent.
+        double latitude = MyApp.getTaipeiAttractions().getLatitude(position);
+        double longitude = MyApp.getTaipeiAttractions().getLongitude(position);
+        String title = MyApp.getTaipeiAttractions().getSubTitle(position);
+        String s = String.format("geo:0,0?q=%f,%f(%s)", latitude, longitude, title);
+        Uri gmmIntentUri = Uri.parse(s);
+
+        // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        // Make the Intent explicit by setting the Google Maps package
+        mapIntent.setPackage("com.google.android.apps.maps");
+        // Attempt to start an activity that can handle the Intent
+
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
     }
 }

@@ -32,4 +32,8 @@ public class TaipeiAttractions {
     public List<List<String>> getImageUrlsList() {
         return imageUrlsList;
     }
+
+    public double getLatitude(int index) { return attractions.get(index).getLatitude(); }
+
+    public double getLongitude(int index) { return attractions.get(index).getLongitude(); }
 }

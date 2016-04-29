@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +36,8 @@ public class AttractionsRecyclerViewAdapter
             holder.m_tv_title.setText("" + position); // 顯示現在是第幾項
             return;
         }
-
+        // 將 postion 記錄在 Button 的 Tag
+        holder.m_btn_map.setTag(position);
         // 設定景點名稱與種類
         holder.m_tv_title.setText(position + " " + ta.getSubTitle(position));
         holder.m_tv_category.setText(ta.getCategory(position));
@@ -72,6 +74,7 @@ public class AttractionsRecyclerViewAdapter
         private TextView m_tv_title;
         private TextView m_tv_category;
         private ImageView m_im_image;
+        private Button m_btn_map;
 
         // 建構子
         public MyViewHolder(View itemView) {
@@ -79,6 +82,7 @@ public class AttractionsRecyclerViewAdapter
             m_tv_title = (TextView) itemView.findViewById(R.id.tv_stitle);
             m_tv_category = (TextView) itemView.findViewById(R.id.tv_category);
             m_im_image = (ImageView) itemView.findViewById(R.id.iv_image);
+            m_btn_map = (Button)itemView.findViewById(R.id.btn_map);
         }
     }
 
